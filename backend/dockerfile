@@ -1,24 +1,42 @@
-# Build stage
-FROM node:18-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
+# ================================
+# Build Stage
+# ================================
+FROM node:22-alpine AS builder
 
-# Runtime stage
-FROM node:18-alpine
+WORKDIR /app
+
+# Copy dependency files first for Docker layer caching
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm ci --omit=dev
+
+
+# ================================
+# Runtime Stage
+# ================================
+FROM node:22-alpine
+
 WORKDIR /app
 
 # Install dumb-init for proper signal handling
 RUN apk add --no-cache dumb-init
 
+# Copy production dependencies from builder
 COPY --from=builder /app/node_modules ./node_modules
-COPY . .
 
+# Copy application source
+COPY src ./src
+
+# Application port
 EXPOSE 3000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+# Container health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3000/api/v1/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
 
-ENTRYPOINT ["/usr/sbin/dumb-init", "--"]
+# Use dumb-init as PID 1
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+
+# Start CloudSwitch API
 CMD ["node", "src/server.js"]
