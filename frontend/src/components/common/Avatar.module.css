@@ -1,0 +1,21 @@
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.xs { width: 20px; height: 20px; font-size: 0.6rem; }
+.sm { width: 28px; height: 28px; font-size: 0.7rem; }
+.md { width: 36px; height: 36px; font-size: 0.8rem; }
+.lg { width: 48px; height: 48px; font-size: 1rem; }
