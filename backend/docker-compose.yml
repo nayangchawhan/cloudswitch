@@ -9,4 +9,4 @@ services:
     port:
       - "5432:5432"
     volume:
-      - cloudswitch_postgres_data:/var/lib/postgresql/data
+      - cloudswitch_postgres_data:/var/lib/postgresql/data 
