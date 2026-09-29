@@ -16,3 +16,5 @@ services:
     container_name: cloudswitch-redis
     ports:
       - "6379:6379"
+volumes:
+  cloudswitch_postgres_data:
