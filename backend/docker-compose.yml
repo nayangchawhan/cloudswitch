@@ -16,5 +16,13 @@ services:
     container_name: cloudswitch-redis
     ports:
       - "6379:6379"
+
+  backend:
+    image: cloudswitch-backend:test
+    container_name: cloudswitch-backend
+    env_file:
+      - .env 
+    ports:
+      - "3000:3000"
 volumes:
   cloudswitch_postgres_data:
