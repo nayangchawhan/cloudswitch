@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: cloudswitch-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cloudswitch
+    port:
+      - "5432:5432"
+    volume:
+      - cloudswitch_postgres_data:/var/lib/postgresql/data
