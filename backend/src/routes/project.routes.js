@@ -11,6 +11,7 @@ const {
 const { param } = require('express-validator');
 
 // Dashboard stats endpoint
+router.get('/dashboard', authenticate, projectController.getDashboardStats);
 router.get('/dashboard/stats', authenticate, projectController.getDashboardStats);
 
 // Project CRUD

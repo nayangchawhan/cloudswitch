@@ -7,6 +7,7 @@ const { createTaskValidator, updateTaskValidator, taskQueryValidator } = require
 const { param } = require('express-validator');
 
 // Kanban board for a project
+router.get('/kanban/:projectId', authenticate, [param('projectId').isUUID()], validate, taskController.getKanbanBoard);
 router.get('/board/:projectId', authenticate, [param('projectId').isUUID()], validate, taskController.getKanbanBoard);
 
 // Task CRUD
