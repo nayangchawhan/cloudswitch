@@ -30,4 +30,4 @@ jobs:
 
       - name: Check backend
         working-directory: ./backend
-        run: node --check src/index.js 
+        run: node --check src/server.js 
