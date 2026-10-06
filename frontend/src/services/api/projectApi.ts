@@ -43,5 +43,5 @@ export const projectApi = {
       .then((r) => r.data),
 
   getDashboardStats: () =>
-    apiClient.get<ApiResponse<DashboardStats>>('/projects/dashboard').then((r) => r.data),
+    apiClient.get<ApiResponse<DashboardStats>>('/projects/dashboard/stats').then((r) => r.data),
 };
